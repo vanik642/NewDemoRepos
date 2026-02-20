@@ -8,15 +8,17 @@ import com.google.basetest.BaseTest;
 
 public class LoginPageTest extends BaseTest {
 	
-	@Test(priority = 1)
+	@Test(invocationCount = 5)
 	public void loginPageTitleTest() {
 		String actPageTitle=loginPage.getloginPageTitle();
+		System.out.println("actPageTitl========>"+actPageTitle); 
 		Assert.assertEquals(actPageTitle, "Facebook");
 	}
 	
 //	@Test(priority = 2)
 //	public void loginPageURLTest() {
 //		String actPageUrl=loginPage.getloginPageURL();
+//		System.out.println("actPageUrl========>"+actPageUrl); 
 //		Assert.assertEquals(actPageUrl, "https://www.facebook.com/");
 //		
 //	}

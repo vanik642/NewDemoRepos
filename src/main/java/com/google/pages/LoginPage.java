@@ -1,6 +1,9 @@
 package com.google.pages;
 
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +22,7 @@ public class LoginPage {
 	
 	//1.private By locators
 	private final By searchBox=By.name("q");
-	private final By fbLite=By.xpath("//a[@title='Facebook Lite for Android.']");
+	private final By fbLite=By.xpath("//a[text()='Facebook Lite']");
 
 	
 	public LoginPage(WebDriver driver) {
@@ -50,12 +53,24 @@ public class LoginPage {
 //	}
 //	
 	public FaceBookLite clickFaceBookLite() {
-		eleUtil.clickWhenReady(fbLite,2000);
+		
+		WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(fbLite));
+
+
+jsUtil.scrollIntoView(element);
+element.click();
+
+return new FaceBookLite(driver);
 	   
-	    return new FaceBookLite(driver);
+	    
 	    
 		
 	}
+	
+//	WebElement element = driver.findElement(By.id("example"));
+//	((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);", element);
+//	element.click();
 	
 	
 	

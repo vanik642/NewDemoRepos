@@ -425,6 +425,10 @@ public class ElementUtil {
 		//highlightElement(element);
 		return element;
 	}
+       
+       
+      
+   
     
     /**
      * An expectation for checking an element is visible and enabled such that you can click it.
@@ -486,6 +490,8 @@ public class ElementUtil {
 		}
 
 	}
+	
+	
 	
 	public String waitForTitleIs(String title, int timeOut) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
