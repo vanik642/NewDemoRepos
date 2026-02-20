@@ -1,35 +1,103 @@
-pipeline {
+pipeline 
+{
     agent any
-    tools { maven 'maven' }
-
-    stages {
-
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/vanik642/SampleDemoFramework.git'
-            }
+    
+    tools{
+        maven 'maven'
         }
 
-        stage('Regression Automation Tests') {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml -Denv=qa"
+    stages 
+    
+    {
+		
+		
+        stage('Build') 
+        {
+            steps
+            {
+				 withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
+                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+            }
+            post 
+            {
+                success
+                {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
                 }
-                junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
-
-        stage('Publish Allure Reports') {
+        
+        
+        
+        stage("Deploy to QA"){
+            steps{
+                echo("deploy to qa done")
+            }
+        }
+        
+        
+        
+                
+      stage('Regression Automation Tests') {
             steps {
-                allure([
-                    results: [[path: 'allure-results']],
-                    reportBuildPolicy: 'ALWAYS'
-                ])
+				withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/vanik642/NewDemoRepos.git'
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml -Denv=qa"
+                    
+                }
+                }
             }
         }
-
-        stage("Deploy to QA") { steps { echo "Deploy QA done" } }
-        stage("Deploy to Stage") { steps { echo "Deploy Stage done" } }
-        stage("Deploy to PROD") { steps { echo "Deploy PROD done" } }
+                
+     
+      stage('Publish Allure Reports') {
+           steps {
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: '/allure-results']]
+                    ])
+                }
+            }
+        }
+        
+       
+        
+        stage("Deploy to Stage"){
+            steps{
+                echo("deploy to Stage")
+            }
+        }
+        
+        stage('Sanity Automation Test') {
+            steps {
+				withEnv(['PATH+EXTRA=/usr/sbin:/usr/bin:/sbin:/bin']){
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/vanik642/NewDemoRepos.git'
+                    sh "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml -Denv=stage"
+                    
+                }
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        stage("Deploy to PROD"){
+            steps{
+                echo("deploy to PROD")
+            }
+        }
+        
+        
     }
 }

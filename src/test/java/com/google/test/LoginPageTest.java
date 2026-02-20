@@ -11,7 +11,7 @@ public class LoginPageTest extends BaseTest {
 	@Test(priority = 1)
 	public void loginPageTitleTest() {
 		String actPageTitle=loginPage.getloginPageTitle();
-		//Assert.assertEquals(actPageTitle, "Facebook - log in or sign up");
+		Assert.assertEquals(actPageTitle, "Facebook");
 	}
 	
 //	@Test(priority = 2)
