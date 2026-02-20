@@ -8,21 +8,19 @@ import com.google.basetest.BaseTest;
 
 public class LoginPageTest extends BaseTest {
 	
-	@Test(invocationCount = 5)
+	@Test(priority = 1)
 	public void loginPageTitleTest() {
 		String actPageTitle=loginPage.getloginPageTitle();
-		System.out.println("actPageTitl========>"+actPageTitle); 
 		Assert.assertEquals(actPageTitle, "Facebook");
 	}
 	
-//	@Test(priority = 2)
-//	public void loginPageURLTest() {
-//		String actPageUrl=loginPage.getloginPageURL();
-//		System.out.println("actPageUrl========>"+actPageUrl); 
-//		Assert.assertEquals(actPageUrl, "https://www.facebook.com/");
-//		
-//	}
-//	
+	@Test(priority = 2)
+	public void loginPageURLTest() {
+		String actPageUrl=loginPage.getloginPageURL();
+		Assert.assertEquals(actPageUrl, "https://www.facebook.com/");
+		
+	}
+	
 	//@Test
 //	public void loginPageSearchItem() {
 //	    loginPage.searchItem();
@@ -30,12 +28,12 @@ public class LoginPageTest extends BaseTest {
 //		
 //	}
 	
-//	@Test(priority = 3)
-//	public void loginPageURLTest1() {
-//		
-//		loginPage.clickFaceBookLite();
-//		
-//	}
+	@Test(priority = 3)
+	public void loginPageURLTest1() {
+		
+		loginPage.clickFaceBookLite();
+		
+	}
 
 
 }
