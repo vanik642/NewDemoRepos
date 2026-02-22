@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite thread-count="3" parallel="tests" name="Failed suite [Opencart App Test Regression Suite]" guice-stage="DEVELOPMENT" verbose="4">
-  <test thread-count="3" parallel="tests" name="Login Page FaceBook_FIrefos(failed)" verbose="4">
-    <parameter name="browser" value="firefox"/>
+  <listeners>
+    <listener class-name="com.google.listeners.TestAllureListener"/>
+  </listeners>
+  <test thread-count="3" parallel="tests" name="Login Page FaceBook(failed)" verbose="4">
+    <parameter name="browser" value="chrome"/>
     <parameter name="testname" value="Login Page Test"/>
     <classes>
       <class name="com.google.test.LoginPageTest">
         <methods>
           <include name="loginPageURLTest1"/>
+          <include name="loginPageURLTest"/>
           <include name="loginPageTitleTest"/>
           <include name="tearDown"/>
           <include name="setUp"/>
         </methods>
       </class> <!-- com.google.test.LoginPageTest -->
     </classes>
-  </test> <!-- Login Page FaceBook_FIrefos(failed) -->
+  </test> <!-- Login Page FaceBook(failed) -->
 </suite> <!-- Failed suite [Opencart App Test Regression Suite] -->

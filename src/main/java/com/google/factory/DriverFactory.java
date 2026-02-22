@@ -3,11 +3,14 @@ package com.google.factory;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.google.exception.BrowserException;
 import com.google.exception.FrameworkException;
@@ -26,8 +29,21 @@ public class DriverFactory {
 		
 		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
-			driver=new ChromeDriver(optionsManager.getChromeOptions());
+			if(Boolean.parseBoolean(prop.getProperty("remote")) ){
+				try {
+					driver=new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getChromeOptions());
+				} catch (MalformedURLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else {
+				driver=new ChromeDriver(optionsManager.getChromeOptions());
+				
+				
+			}
 			break;
+			
 		case "firefox":
 			driver=new FirefoxDriver(optionsManager.getFirefoxOptions());
 			break;

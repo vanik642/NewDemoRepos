@@ -5,8 +5,6 @@
     <classes>
       <class name="com.google.test.LoginPageTest">
         <methods>
-          <include name="loginPageURLTest1"/>
-          <include name="loginPageURLTest"/>
           <include name="loginPageTitleTest"/>
           <include name="tearDown"/>
           <include name="setUp"/>
