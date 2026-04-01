@@ -32,4 +32,4 @@ jobs:
         uses: nanasess/setup-chromedriver@v2
 
       - name: Run tests
-        run: mvn -B clean test -DsuiteXmlFile=src/test/resources/testrunners/testng_regression.xml
+        run: mvn -B clean test -DsuiteXmlFile=src/test/resources/testrunners/testng_regression.xml -Denv=qa
